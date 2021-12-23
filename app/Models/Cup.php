@@ -10,7 +10,7 @@ class Cup extends Model
 {
     use SoftDeletes;
     use HasFactory;
-    protected $fillable =['year', 'place', 'country', 'winner', 'logo'];
+    protected $fillable =['year', 'place', 'country', 'winner', 'logo', 'user_id'];
 
     public function getIDAttribute()
     {
@@ -35,5 +35,18 @@ class Cup extends Model
     public function getWinnerLogoAttribute()
     {
         return $this->attributes['logo'];
+    }
+    public function getUserIdAttribute()
+    {
+        return $this->attributes['user_id'];
+    }
+    public function getOwnerNameAttribute()
+    {
+        $user = User::where('id','=', $this->attributes['user_id'])->get();
+        return $user[0]['name'];
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

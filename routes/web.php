@@ -18,9 +18,7 @@ Route::get('/', function () {
 });
 Route::middleware('auth')->group(function () {
     Route::get('/cups', [\App\Http\Controllers\CupController::class, 'index']);
-    Route::get('/cups/create', function () {
-        return view('cup.create');
-    });
+    Route::get('/cups/create', [\App\Http\Controllers\CupController::class, 'create'])->name('game.create');
     Route::post('/cups', [\App\Http\Controllers\CupController::class, 'store']);
     Route::get('/cups/{cup}/edit', [\App\Http\Controllers\CupController::class, 'edit']);
     Route::get('/cups/{cup}', [\App\Http\Controllers\CupController::class, 'show']);
@@ -31,6 +29,14 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/users', [\App\Http\Controllers\UserController::class, 'index'])->name('users');
     Route::get('/users/{user:name}', [\App\Http\Controllers\UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{user:name}/addFriend', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'getAddFriend']);
+    Route::get('/users/{user:name}/removeFriend', [\App\Http\Controllers\Auth\RegisteredUserController::class, 'getRemoveFriend']);
+
+    Route::get('/games', [\App\Http\Controllers\GameController::class, 'index'])->name('games');
+    Route::get('/games/create', [\App\Http\Controllers\GameController::class, 'create'])->name('game.create');
+    Route::post('/games', [\App\Http\Controllers\GameController::class, 'store'])->name('games.store');
+    Route::get('/news', [\App\Http\Controllers\GameController::class, 'news'])->name('news');
+
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');

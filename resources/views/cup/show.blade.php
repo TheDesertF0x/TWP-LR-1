@@ -15,6 +15,13 @@
         table {
             border: 2px solid black;
             width: 100%;
+            margin-bottom: 5px;
+        }
+        th, td {
+            border: 1px solid black;
+        }
+        td.icon{
+            border: none;
         }
     </style>
     <x-slot name="header">
@@ -52,11 +59,66 @@
                 <p>Победитель: {{ $cup->getWinnerAttribute() }}</p>
             </div>
             <div style="text-align: center">
-                Место и страна проведения суперфинала: {{$cup->getPlaceAttribute()}}, {{$cup->getCountryAttribute()}}
+                Страна и место проведения суперфинала: {{$cup->getPlaceAttribute()}}, {{$cup->getCountryAttribute()}}
             </div>
             <div style="text-align: center">
                 Создатель записи: {{$cup->getOwnerNameAttribute()}}
             </div>
+            <details style="text-align: center">
+                <summary>Матчи</summary>
+                @if (count($games=\App\Models\Cup::find($cup->id)->games))
+                    <table align="center">
+                        <tr>
+                            <th>
+                                Дата
+                            </th>
+                            <th>
+                                Стадион
+                            </th>
+                            <th>
+                                Уровень
+                            </th>
+                            <th>
+                                Победитель
+                            </th>
+                            <th>
+                                Создатель записи
+                            </th>
+                            <th>
+                                Опубликовано
+                            </th>
+                        </tr>
+                        @foreach($games=\App\Models\Cup::find($cup->id)->games as $game)
+                            <tr>
+                                <td align="center" valign="center">
+                                    {{ $game->getDateAttribute() }}
+                                </td>
+                                <td align="center" valign="center">
+                                    {{ $game->getStadiumAttribute() }}
+                                </td>
+                                <td align="center" valign="center">
+                                    {{ $game->getLevelAttribute() }}
+                                </td>
+                                <td align="center" valign="center">
+                                    {{ $game->getWinnerAttribute() }}
+                                </td>
+                                <td align="center" valign="center">
+                                    @if(auth()->user()->friends->contains($game->user_id))
+                                        <span style="color: blue">{{ $game->getOwnerNameAttribute() }}</span>
+                                    @else
+                                        {{ $game->getOwnerNameAttribute() }}
+                                    @endif
+                                </td>
+                                <td align="center" valign="center">
+                                    {{ $game->updated_at }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                @else
+                    <strong style="text-align: center">No games in database</strong>
+                @endif
+            </details>
         </div>
     </div>
 </x-app-layout>

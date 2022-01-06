@@ -84,9 +84,9 @@
                            name="country"
                            value=""></x-input>
 
-                    @if ($errors->has('cup-country'))
+                    @if ($errors->has('country'))
                         <span class="invalid-feedback" role="alert">
-                                    <strong>{{$errors->first('cup-country')}}</strong>
+                                    <strong>{{$errors->first('country')}}</strong>
                                 </span>
                     @endif
                 </div>
@@ -99,9 +99,9 @@
                            name="winner"
                            value=""></x-input>
 
-                    @if ($errors->has('cup-winner'))
+                    @if ($errors->has('winner'))
                         <span class="invalid-feedback" role="alert">
-                                    <strong>{{$errors->first('cup-winner')}}</strong>
+                                    <strong>{{$errors->first('winner')}}</strong>
                                 </span>
                     @endif
                 </div>
@@ -114,9 +114,9 @@
                            name="logo"
                            value=""></x-input>
 
-                    @if ($errors->has('cup-logo'))
+                    @if ($errors->has('logo'))
                         <span class="invalid-feedback" role="alert">
-                                    <strong>{{$errors->first('cup-logo')}}</strong>
+                                    <strong>{{$errors->first('logo')}}</strong>
                                 </span>
                     @endif
                 </div>

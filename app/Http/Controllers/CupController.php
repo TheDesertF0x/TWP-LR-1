@@ -14,6 +14,10 @@ class CupController extends Controller
         $cups=Cup::all();
         return view('cup.index', ['cups'=>$cups]);
     }
+    public function create()
+    {
+        return view('cup.create');
+    }
     public function store()
     {
         $data = request()->validate([

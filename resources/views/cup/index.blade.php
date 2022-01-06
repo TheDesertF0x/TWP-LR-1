@@ -14,7 +14,7 @@
         }
         table {
             border: 2px solid black;
-            margin: 5px;
+            margin-bottom: 5px;
         }
         th, td {
             border: 1px solid black;
@@ -31,12 +31,24 @@
 
     <div class="flex justify-center max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-            <div style="text-align: right; margin-right: 5px">
-                <form action="/users" method="get">
-                    <button ><i class="fa fa-users"></i></button>
-                </form>
+            <div style="display: flex">
+                <div style="float: left; margin-left: 5px">
+                    <form action="/games" method="get">
+                        <button ><i class="fas fa-hockey-puck"></i></button>
+                    </form>
+                </div>
+                <div style="float: left; margin-left: 5px">
+                    <form action="/users" method="get">
+                        <button ><i class="fa fa-users"></i></button>
+                    </form>
+                </div>
+                <div style="float: left; margin-left: 5px">
+                    <form action="/news" method="get">
+                        <button ><i class="fas fa-newspaper"></i></button>
+                    </form>
+                </div>
             </div>
-            @if ($cups != null)
+            @if (count($cups) > 0 OR (count(\App\Models\Cup::onlyTrashed()->get()) > 0 AND \Illuminate\Support\Facades\Auth::user()->is_admin))
                 <table align="center">
                     <tr>
                         <th>
@@ -101,6 +113,11 @@
                 </table>
             @else
                 <strong style="text-align: center">No cups in database</strong>
+                <div style="text-align: center">
+                    <form action="/cups/create" method="get">
+                        <button ><i class="fa fa-plus"></i></button>
+                    </form>
+                </div>
             @endif
         </div>
     </div>

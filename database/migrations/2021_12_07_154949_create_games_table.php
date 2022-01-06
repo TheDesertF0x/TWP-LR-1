@@ -18,12 +18,9 @@ class CreateGamesTable extends Migration
             $table->date('date');
             $table->string('stadium');
             $table->string('level');
-            $table->string('first_team');
-            $table->string('second_team');
-            $table->integer('num_of_pucks_first')->comment('Количество шайб, забитых первой командой');
-            $table->integer('num_of_pucks_second')->comment('Количество шайб, забитых второй командой');
-            $table->string('winner')->comment('Победитель в матче');
-            $table->foreignId('cup_id')->constrained('cups');
+            $table->string('winner');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('cup_id')->constrained('cups')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

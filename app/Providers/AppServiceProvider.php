@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Cup;
+use App\Models\Game;
 use App\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -30,6 +31,9 @@ class AppServiceProvider extends ServiceProvider
 
         Gate::define('cup-change', function (User $user, Cup $cup){
             return ($cup->user_id == $user->id);
+        });
+        Gate::define('game-change', function (User $user, Game $game){
+            return ($game->user_id == $user->id);
         });
     }
 }

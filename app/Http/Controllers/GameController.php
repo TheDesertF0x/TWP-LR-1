@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Game;
+use App\Models\Cup;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class GameController extends Controller
 {
@@ -11,21 +16,33 @@ class GameController extends Controller
         $games = Game::all();
         return view('game.index', ['games'=>$games]);
     }
+    public function news()
+    {
+        $games=Game::all();
+        $users=User::all();
+        return view('game.news', ['games'=>$games, 'users'=>$users]);
+    }
+    public function create()
+    {
+        $cups=Cup::all();
+        return view('game.create', ['cups'=>$cups]);
+    }
     public function store()
     {
         $data = request()->validate([
-            //остановился тут на записи полей
+            'date'=>'required|date',
+            'stadium'=>'required|max:100',
+            'level'=>'required|max:100',
+            'winner'=>'required|max:100'
         ]);
-        $games = new Game();
-        $games->date = request('date');
-        $games->stadium = request('stadium');
-        $games->level = request('level');
-        $games->first_team = request('first_team');
-        $games->second_team = request('second_team');
-        $games->num_of_pucks_first = request('num_of_pucks_first');
-        $games->num_of_pucks_second = request('num_of_pucks_second');
-        $games->winner = request('winner');
-        $games->save();
+        $game = new Game();
+        $game->date = request('date');
+        $game->stadium = request('stadium');
+        $game->level = request('level');
+        $game->winner = request('winner');
+        $game->user_id = Auth::id();
+        $game->cup_id = request('cup_id');
+        $game->save();
         return redirect('/games');
     }
     public function edit(Game $game)
@@ -35,9 +52,10 @@ class GameController extends Controller
     public function update(Game $game)
     {
         $data = request()->validate([
-            'year'=>'integer',
-            'place'=>'required|max:100',
-            'country'=>'required|max:100'
+            'date'=>'integer',
+            'stadium'=>'required|max:100',
+            'level'=>'required|max:100',
+            'winner'=>'required|max:100'
         ]);
         $game->update($data);
         return redirect('games/'.$game->id);

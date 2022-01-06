@@ -31,9 +31,19 @@
 
     <div class="flex justify-center max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-            <div style="text-align: left; margin-left: 2.5px">
+            <div style="float: left; margin-left: 5px">
                 <form action="/cups" method="get">
-                    <button><i class="fa fa-arrow-left"></i></button>
+                    <button><i class="fas fa-trophy"></i></button>
+                </form>
+            </div>
+            <div style="float: left; margin-left: 5px">
+                <form action="/games" method="get">
+                    <button ><i class="fas fa-hockey-puck"></i></button>
+                </form>
+            </div>
+            <div style="float: left; margin-left: 5px">
+                <form action="/news" method="get">
+                    <button ><i class="fas fa-newspaper"></i></button>
                 </form>
             </div>
             @forelse($users as $user)

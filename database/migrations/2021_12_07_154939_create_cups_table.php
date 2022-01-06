@@ -20,7 +20,7 @@ class CreateCupsTable extends Migration
             $table->string('country');
             $table->string('winner')->nullable();
             $table->string('logo')->nullable();
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();
         });

@@ -28,17 +28,34 @@
             {{__('Список кубков, добавленных пользователем '.$user->name)}}
         </x-h2>
     </x-slot>
-
     <div class="flex justify-center max-w-6xl mx-auto sm:px-6 lg:px-8">
         <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
             <div>
-                <div style="display: inline-block; margin-left: 5px">
-                    <form action="/cups" method="get">
-                        <button><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
-                    </form>
+                <div style="display: flex">
+                    <div style="float: left; margin-left: 5px">
+                        <form action="/users" method="get">
+                            <button ><i class="fas fa-arrow-left"></i></button>
+                        </form>
+                    </div>
+                    <div style="display: inline-block; margin-left: 5px">
+                        @if(auth()->user()->friends->contains($user->id))
+                            <div style="margin-bottom: 5px">
+                                <a href="/users/{{$user->name}}/removeFriend">
+                                    <x-button style="background-color: #b00000; height: 24px">Удалить из друзей</x-button>
+                                </a>
+                            </div>
+                        @elseif($user->id != \Illuminate\Support\Facades\Auth::user()->id)
+                            <div style="margin-bottom: 5px">
+                                <a href="/users/{{$user->name}}/addFriend">
+                                    <x-button style="background-color: #486a8d; height: 24px">Добавить в друзья</x-button>
+                                </a>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
-            @if ($cups=\App\Models\User::find($user->id)->cups != null)
+
+            @if (count($cups=\App\Models\User::find($user->id)->cups) > 0)
                 <table align="center">
                     <tr>
                         <th>

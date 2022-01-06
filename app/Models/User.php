@@ -46,4 +46,18 @@ class User extends Authenticatable
     {
         return $this->hasMany(Cup::class);
     }
+    public function friends()
+    {
+        return $this->belongsToMany(User::class, 'friends_users', 'user_id', 'friend_id');
+    }
+
+    public function addFriend(User $user)
+    {
+        $this->friends()->attach($user->id);
+    }
+
+    public function removeFriend(User $user)
+    {
+        $this->friends()->detach($user->id);
+    }
 }
